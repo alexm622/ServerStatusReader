@@ -1,5 +1,8 @@
 package com.alex;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import com.ibasco.agql.core.utils.ConcurrentUtils;
@@ -28,7 +31,7 @@ public class QueryServers extends BaseExample{
 	private static final Logger log = LoggerFactory.getLogger(QueryServers.class);
     private SourceQueryClient sourceQueryClient;
     private MasterServerQueryClient masterServerQueryClient;
-    private static List<SourceServer> ssList;
+    public static SourceServer[] ss;
     
     
 	
@@ -47,12 +50,14 @@ public class QueryServers extends BaseExample{
 
         double start = System.currentTimeMillis();
         queryAllServers(filter);
+        
         double end = ((System.currentTimeMillis() - start) / 1000) / 60;
         System.out.println("Test Completed  in" + end +  "minutes");
+        
+        
     }
 
     private SourceServer queryAllServers(MasterServerFilter filter) {
-    	SourceServer ss;
         final Map<String, Double> resultMap = new HashMap<>();
 
         final AtomicInteger masterServerCtr = new AtomicInteger(), masterError = new AtomicInteger();
@@ -60,6 +65,9 @@ public class QueryServers extends BaseExample{
         final AtomicInteger challengeCtr = new AtomicInteger(), challengeErr = new AtomicInteger();
         final AtomicInteger playersCtr = new AtomicInteger(), playersErr = new AtomicInteger();
         final AtomicInteger rulesCtr = new AtomicInteger(), rulesErr = new AtomicInteger();
+        final AtomicInteger count = new AtomicInteger();
+        
+        
 
         try {
             List<CompletableFuture<?>> requestList = new ArrayList<>();
@@ -72,6 +80,7 @@ public class QueryServers extends BaseExample{
                             masterError.incrementAndGet();
                             return;
                         }
+                        
 
                         System.out.println("[MASTER : INFO line 75] : " + serverAddress);
                         masterServerCtr.incrementAndGet();
@@ -83,13 +92,20 @@ public class QueryServers extends BaseExample{
                                 return;
                             }
                             serverInfoCtr.incrementAndGet();
+                            
                             System.out.println("[SERVER : INFO] line 85 : " + sourceServer);
-                            QueryServers.appendSS(sourceServer);
+                            
+                            count.lazySet(count.addAndGet(1));
+                            
+                        	
+                            
+                            
+                            
                             
                         });
-
                         
-
+                        
+                        
                         //Get Challenge
                         
                         
@@ -97,18 +113,22 @@ public class QueryServers extends BaseExample{
                         log.error("Error occured inside the master list callback", e);
                     }
                 }).get(); //masterServerList
-
-                System.out.println("Waiting for" + requestList.size() + " requests to complete");
+                
+                
+                System.out.println("Waiting for " + requestList.size() + " requests to complete");
                 CompletableFuture[] futures = requestList.toArray(new CompletableFuture[0]);
                 CompletableFuture.allOf(futures).get();
+                System.out.println("count : " + count.intValue());
+                
             } catch (Exception e) {
-                log.error("Error occured during processing", e);
+                e.printStackTrace();
             } 
             
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
+        
         return null;
     }
 	
@@ -132,10 +152,9 @@ public class QueryServers extends BaseExample{
         this.queryAllServers();
 	}
 	
-	public static void appendSS(SourceServer ss) {
-		ssList.add(ss);
-		System.out.println("whatever: " + ss);
-	}
+	
+	
+	
 	
 	
 	
