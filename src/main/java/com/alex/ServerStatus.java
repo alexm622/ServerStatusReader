@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 public class ServerStatus implements Serializable {
 	
-	private String name, map, description, operatingSystem, tags;
-	private int appID, numOfPlayers,maxPlayers,numOfBots, serverID;
+	private String name, map, description, tags;
+	private char operatingSystem;
+	private int numOfPlayers,maxPlayers,numOfBots;
+	private long appID;
+	private long serverID;
 	private boolean isDedicated, isSecure;
 	
 	public ServerStatus() {
@@ -36,10 +39,10 @@ public class ServerStatus implements Serializable {
 	}
 	
 	//os
-	public String getOperatingSystem() {
+	public char getOperatingSystem() {
 		return operatingSystem;
 	}
-	public void setOperatingSystem(String operatingSystem) {
+	public void setOperatingSystem(char operatingSystem) {
 		this.operatingSystem = operatingSystem;
 	}
 	
@@ -52,11 +55,11 @@ public class ServerStatus implements Serializable {
 	}
 	
 	//appId
-	public int getAppID() {
+	public long getAppID() {
 		return appID;
 	}
-	public void setAppID(int appID) {
-		this.appID = appID;
+	public void setAppID(long l) {
+		this.appID = l;
 	}
 	
 	//num of players
@@ -84,10 +87,10 @@ public class ServerStatus implements Serializable {
 	}
 	
 	//server ID
-	public int getServerID() {
+	public long getServerID() {
 		return serverID;
 	}
-	public void setServerID(int serverID) {
+	public void setServerID(long serverID) {
 		this.serverID = serverID;
 	}
 	
@@ -105,6 +108,20 @@ public class ServerStatus implements Serializable {
 	}
 	public void setSecure(boolean isSecure) {
 		this.isSecure = isSecure;
+	}
+	
+	public String toString() {
+		return "name: " + this.name +
+				",map: " + this.map +
+				", desc: " + this.description + 
+				", numPlayers: " + this.numOfPlayers + 
+				", numBots: " + this.numOfBots +
+				", appID: " + this.appID + 
+				", serverID: " + this.serverID + 
+				", isDedicated: " + this.isDedicated + 
+				", isSecure: " + this.isSecure + 
+				", operatingSystem: " + this.operatingSystem + 
+				", tags: " + this.tags;
 	}
 	
 }

@@ -2,8 +2,10 @@ package com.alex;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import com.ibasco.agql.core.utils.ConcurrentUtils;
 import com.ibasco.agql.protocols.valve.source.query.client.SourceQueryClient;
@@ -31,7 +33,7 @@ public class QueryServers extends BaseExample{
 	private static final Logger log = LoggerFactory.getLogger(QueryServers.class);
     private SourceQueryClient sourceQueryClient;
     private MasterServerQueryClient masterServerQueryClient;
-    public static SourceServer[] ss;
+    public static ArrayList<ServerStatus> ss;
     
     
 	
@@ -65,8 +67,8 @@ public class QueryServers extends BaseExample{
         final AtomicInteger challengeCtr = new AtomicInteger(), challengeErr = new AtomicInteger();
         final AtomicInteger playersCtr = new AtomicInteger(), playersErr = new AtomicInteger();
         final AtomicInteger rulesCtr = new AtomicInteger(), rulesErr = new AtomicInteger();
-        final AtomicInteger count = new AtomicInteger();
         
+        ss = new ArrayList<ServerStatus>();
         
 
         try {
@@ -94,12 +96,24 @@ public class QueryServers extends BaseExample{
                             serverInfoCtr.incrementAndGet();
                             
                             System.out.println("[SERVER : INFO] line 85 : " + sourceServer);
+                            System.out.println("gameid: " + sourceServer.getGameId());
                             
-                            count.lazySet(count.addAndGet(1));
+                            ServerStatus status = convertToBean(sourceServer);
                             
-                        	
+                            ss.add(status);
+                            
+                            File file = new File("/tmp/queryservers/output.txt");
+                            StringBuilder sb = new StringBuilder();
+                            
+                                                       
                             
                             
+                            try {
+								writeBeans(ss);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                             
                             
                         });
@@ -118,7 +132,7 @@ public class QueryServers extends BaseExample{
                 System.out.println("Waiting for " + requestList.size() + " requests to complete");
                 CompletableFuture[] futures = requestList.toArray(new CompletableFuture[0]);
                 CompletableFuture.allOf(futures).get();
-                System.out.println("count : " + count.intValue());
+                
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -152,6 +166,46 @@ public class QueryServers extends BaseExample{
         this.queryAllServers();
 	}
 	
+	
+	private static ServerStatus convertToBean(SourceServer ss) {
+		ServerStatus stat = new ServerStatus();
+		
+		stat.setName(ss.getName());
+		stat.setMap(ss.getMapName());
+		stat.setDescription(ss.getGameDescription());
+		stat.setNumOfPlayers(ss.getNumOfPlayers());
+		stat.setNumOfBots(ss.getNumOfBots());
+		stat.setOperatingSystem(ss.getOperatingSystem());
+		stat.setAppID(ss.getGameId());
+		stat.setDedicated(ss.isDedicated());
+		stat.setSecure(ss.isSecure());
+		stat.setServerID(ss.getServerId());
+		stat.setTags(ss.getServerTags());
+		
+		return stat;
+	}
+	
+	private static void writeBeans(ArrayList<ServerStatus> ss) throws IOException{
+		
+		File file = new File("/tmp/servervars/");
+		if(!file.exists()) {
+			file.mkdirs();
+			
+		}
+		file = new File("/tmp/servervars/serverstatus.bin");
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		FileOutputStream f = new FileOutputStream(file);
+		ObjectOutputStream o  = new ObjectOutputStream(f);
+		
+		
+		
+		o.writeObject(ss);
+		o.close();
+		f.close();
+		
+	}
 	
 	
 	
