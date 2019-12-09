@@ -11,39 +11,42 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.time.StopWatch;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.ibasco.agql.protocols.valve.source.query.pojos.SourceServer;
 
 public class MainClass {
 	
 	private static List<SourceServer> ssList;
+	private static StopWatch sw;
 	
 	public static void main(String[] args) {
 		
+		update();
+		sw.start();
 		
-		
-		
-    	QueryServers q = new QueryServers();
-    	try {
-			q.run();
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(true) {
+			if(sw.getTime() >= 600000) {
+				sw.reset();
+				update();
+			}else {
+				long time = sw.getTime();
+				time = 600000 - time;
+				try {
+					System.out.println("Sleeping for " + time + " millis");
+					Thread.sleep(time);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-    	try {
-    		Thread.sleep(5000);
-			tryReading();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
+		
+    	
     	
     }
 	
@@ -59,6 +62,19 @@ public class MainClass {
 		for(ServerStatus s : ss) {
 			System.out.println(s);
 		}
+	}
+	
+	private static void update() {
+		QueryServers q = new QueryServers();
+    	try {
+			q.run();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
 	}
 	
 	
