@@ -8,25 +8,29 @@
   <artifactId>com.Alex</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <build>
-	  <plugins>
-	    <plugin>
-	      <!-- Build an executable JAR -->
-	      <groupId>com.Alex</groupId>
-	      <artifactId>com.Alex</artifactId>
-	      <version>0.0.1-SNAPSHOT</version>
-	      <configuration>
-	        <archive>
-	          <manifest>
-	            <addClasspath>true</addClasspath>
-	            <classpathPrefix>lib/</classpathPrefix>
-	            <mainClass>com.alex.MainClass</mainClass>
-	          </manifest>
-	        </archive>
-	      </configuration>
-	    </plugin>
-	  </plugins>
-	</build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.0</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+                <mainClass>com.alex.MainClass</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
+    <dependency>
+      <groupId>com.ibasco.agql</groupId>
+      <artifactId>agql-lib-core</artifactId>
+      <version>0.1.7</version>
+    </dependency>
   	<dependency>
 	    <groupId>com.ibasco.agql</groupId>
 	    <artifactId>agql-steam-master</artifactId>
