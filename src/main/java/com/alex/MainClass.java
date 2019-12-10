@@ -3,6 +3,7 @@ package com.alex;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,18 +26,19 @@ public class MainClass {
 	public static void main(String[] args) {
 		
 		update();
+		sw = new StopWatch();
 		sw.start();
 		
 		while(true) {
-			if(sw.getTime() >= 600000) {
+			if(sw.getTime() >= 60000) {
 				sw.reset();
 				update();
 			}else {
 				long time = sw.getTime();
-				time = 600000 - time;
+				long time2 = 600000 - time;
 				try {
-					System.out.println("Sleeping for " + time + " millis");
-					Thread.sleep(time);
+					System.out.println("Sleeping for " + time2 + " millis");
+					Thread.sleep(time2);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -68,7 +70,17 @@ public class MainClass {
 		QueryServers q = new QueryServers();
     	try {
 			q.run();
+			Thread.sleep(5000);
 			
+			
+			//get the current server status and delete last config
+			File f = new File("/tmp/queryservers/serverstatus.bin");
+			f.delete();
+			
+			//rename the new file to represent the readable file
+			File f2 = new File("/tmp/queryservers/serverstatus.tmp");
+			
+			f2.renameTo(f);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

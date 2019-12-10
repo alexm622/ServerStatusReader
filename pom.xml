@@ -7,6 +7,25 @@
   <groupId>com.Alex</groupId>
   <artifactId>com.Alex</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+	  <plugins>
+	    <plugin>
+	      <!-- Build an executable JAR -->
+	      <groupId>com.Alex</groupId>
+	      <artifactId>com.Alex</artifactId>
+	      <version>0.0.1-SNAPSHOT</version>
+	      <configuration>
+	        <archive>
+	          <manifest>
+	            <addClasspath>true</addClasspath>
+	            <classpathPrefix>lib/</classpathPrefix>
+	            <mainClass>com.alex.MainClass</mainClass>
+	          </manifest>
+	        </archive>
+	      </configuration>
+	    </plugin>
+	  </plugins>
+	</build>
   <dependencies>
   	<dependency>
 	    <groupId>com.ibasco.agql</groupId>

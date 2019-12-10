@@ -102,11 +102,7 @@ public class QueryServers extends BaseExample{
                             
                             ss.add(status);
                             
-                            File file = new File("/tmp/queryservers/output.txt");
-                            StringBuilder sb = new StringBuilder();
-                            
-                                                       
-                            
+ 
                             
                             try {
 								writeBeans(ss);
@@ -192,7 +188,7 @@ public class QueryServers extends BaseExample{
 			file.mkdirs();
 			
 		}
-		file = new File("/tmp/servervars/serverstatus.bin");
+		file = new File("/tmp/servervars/serverstatus.tmp");
 		if(!file.exists()) {
 			file.createNewFile();
 		}
