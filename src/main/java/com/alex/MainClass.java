@@ -16,6 +16,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.alex.beans.ServerStatus;
 import com.ibasco.agql.protocols.valve.source.query.pojos.SourceServer;
 
 public class MainClass {
@@ -35,7 +36,7 @@ public class MainClass {
 				update();
 			}else {
 				long time = sw.getTime();
-				long time2 = 600000 - time;
+				long time2 = 60000 - time;
 				try {
 					System.out.println("Sleeping for " + time2 + " millis");
 					Thread.sleep(time2);
@@ -74,13 +75,17 @@ public class MainClass {
 			
 			
 			//get the current server status and delete last config
-			File f = new File("/tmp/queryservers/serverstatus.bin");
-			f.delete();
+			File f = new File("/tmp/servervars/serverstatus.bin");
+			
+
+			
 			
 			//rename the new file to represent the readable file
-			File f2 = new File("/tmp/queryservers/serverstatus.tmp");
+			File f2 = new File("/tmp/servervars/serverstatus.tmp");
 			
 			f2.renameTo(f);
+			
+			tryReading();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

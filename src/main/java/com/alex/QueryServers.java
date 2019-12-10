@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import com.alex.beans.ServerStatus;
 import com.ibasco.agql.core.utils.ConcurrentUtils;
 import com.ibasco.agql.protocols.valve.source.query.client.SourceQueryClient;
 import com.ibasco.agql.protocols.valve.source.query.enums.SourceChallengeType;
@@ -181,7 +182,8 @@ public class QueryServers extends BaseExample{
 		return stat;
 	}
 	
-	private static void writeBeans(ArrayList<ServerStatus> ss) throws IOException{
+	private static void writeBeans(ArrayList<com.alex.beans.ServerStatus> ss) throws IOException{
+		
 		
 		File file = new File("/tmp/servervars/serverstatus.tmp");
 		if(!file.exists()) {
