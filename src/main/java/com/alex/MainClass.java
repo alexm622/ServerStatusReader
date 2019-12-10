@@ -31,9 +31,11 @@ public class MainClass {
 		sw.start();
 		
 		while(true) {
-			if(sw.getTime() >= 60000) {
-				sw.reset();
+			if(sw.getTime() >= (long) 60000) {
+				sw.stop();
 				update();
+				sw.reset();
+				sw.start();
 			}else {
 				long time = sw.getTime();
 				long time2 = 60000 - time;
