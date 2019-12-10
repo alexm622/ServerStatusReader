@@ -4,25 +4,46 @@
   	<maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
-  <groupId>com.Alex</groupId>
-  <artifactId>com.Alex</artifactId>
+  <groupId>ServerStatusReader</groupId>
+  <artifactId>ServerStatusReader</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <build>
     <plugins>
+    
+      
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.0</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>com.alex.MainClass</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          
+          <finalName>ServerStatus</finalName>
+          
+          <archive>
+          
+          	<manifest>
+          	
+          		<mainClass>com.alex.MainClass</mainClass>
+          	
+          	</manifest>
+          
+          </archive>
+        </configuration>
       </plugin>
+      
     </plugins>
   </build>
   <dependencies>

@@ -183,13 +183,9 @@ public class QueryServers extends BaseExample{
 	
 	private static void writeBeans(ArrayList<ServerStatus> ss) throws IOException{
 		
-		File file = new File("/tmp/servervars/");
+		File file = new File("/tmp/servervars/serverstatus.tmp");
 		if(!file.exists()) {
-			file.mkdirs();
-			
-		}
-		file = new File("/tmp/servervars/serverstatus.tmp");
-		if(!file.exists()) {
+			System.out.println("attempting to create if it does not exist");
 			file.createNewFile();
 		}
 		FileOutputStream f = new FileOutputStream(file);
