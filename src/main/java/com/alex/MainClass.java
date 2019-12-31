@@ -77,6 +77,7 @@ public class MainClass {
     	try {
 			q.run();
 			Thread.sleep(5000);
+			System.out.println("updating");
 			
 			
 			//get the current server status and delete last config
@@ -89,6 +90,8 @@ public class MainClass {
 			File f2 = new File("/tmp/servervars/serverstatus.tmp");
 			
 			f2.renameTo(f);
+			
+			Thread.sleep(5000);
 			
 			tryReading();
 			

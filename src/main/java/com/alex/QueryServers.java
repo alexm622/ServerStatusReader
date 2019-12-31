@@ -44,7 +44,7 @@ public class QueryServers extends BaseExample{
        
 
         MasterServerFilter filter = MasterServerFilter.create()
-        		.hasServerIp("10.0.0.4");
+        		.hasServerIp("73.17.34.121");
                 
 
         
@@ -186,6 +186,7 @@ public class QueryServers extends BaseExample{
 		
 		
 		File file = new File("/tmp/servervars/serverstatus.tmp");
+		System.out.println("test test test");
 		if(!file.exists()) {
 			System.out.println("attempting to create if it does not exist");
 			file.createNewFile();
