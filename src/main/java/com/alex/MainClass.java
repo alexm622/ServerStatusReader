@@ -64,9 +64,12 @@ public class MainClass {
 		ois.close();
 		fis.close();
 		
+		
 		for(ServerStatus s : ss) {
 			System.out.println(s);
 		}
+		
+		WriteToSql.write(ss);
 	}
 	
 	private static void update() {
