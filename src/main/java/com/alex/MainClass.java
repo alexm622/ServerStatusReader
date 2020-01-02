@@ -27,29 +27,8 @@ public class MainClass {
 	public static void main(String[] args) {
 		
 		update();
-		sw = new StopWatch();
-		sw.start();
 		
-		while(true) {
-			if(sw.getTime() >= (long) 60000) {
-				sw.stop();
-				update();
-				sw.reset();
-				sw.start();
-			}else {
-				long time = sw.getTime();
-				long time2 = 60000 - time;
-				try {
-					System.out.println("Sleeping for " + time2 + " millis");
-					Thread.sleep(time2);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		
+		System.exit(0);
 		
     	
     	
