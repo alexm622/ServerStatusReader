@@ -19,7 +19,7 @@ public class WriteToSql {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			Connection con = DriverManager.getConnection("jdbc:mysql://10.0.0.6:3306/gameserver","sql", "thisisapassword!");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gameserver","script", "script");
 			
 			BuildAndExecute(ss, con);
 			
