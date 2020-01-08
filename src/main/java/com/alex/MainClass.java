@@ -48,7 +48,7 @@ public class MainClass {
 			System.out.println(s);
 		}
 		
-		WriteToSql.write(ss);
+		WriteToSql.write(ss, true);
 	}
 	
 	private static void update() {
@@ -73,6 +73,9 @@ public class MainClass {
 			Thread.sleep(5000);
 			
 			tryReading();
+			ArrayList<ServerStatus> ssTemp = new ArrayList<ServerStatus>();
+			ssTemp.add(Minecraft.mcServer());
+			WriteToSql.write(ssTemp, false);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

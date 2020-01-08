@@ -15,13 +15,13 @@ public class WriteToSql {
 		
 	}
 	
-	public static void write(ArrayList<ServerStatus>  ss) {
+	public static void write(ArrayList<ServerStatus>  ss, boolean del) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gameserver","script", "script");
 			
-			BuildAndExecute(ss, con);
+			BuildAndExecute(ss, con, del);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -31,10 +31,16 @@ public class WriteToSql {
 		
 	}
 	
-	private static void BuildAndExecute(ArrayList<ServerStatus> ssl, Connection con) throws Exception{
-		String query ="delete from servervars;";
-		PreparedStatement stmt = con.prepareStatement(query);
-		stmt.execute();
+	private static void BuildAndExecute(ArrayList<ServerStatus> ssl, Connection con, boolean delete) throws Exception{
+		String query = "";
+		PreparedStatement stmt;
+		if(delete) {
+			query ="delete from servervars;";
+			stmt = con.prepareStatement(query);
+			stmt.execute();
+		}
+		
+		
 		
 		String statement = "insert into servervars values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		

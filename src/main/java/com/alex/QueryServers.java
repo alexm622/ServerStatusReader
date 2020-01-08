@@ -44,7 +44,7 @@ public class QueryServers extends BaseExample{
        
 
         MasterServerFilter filter = MasterServerFilter.create()
-        		.hasServerIp("73.17.34.121");
+        		.hasServerIp("10.0.0.6");
                 
 
         
